@@ -48,16 +48,9 @@ export default function Home() {
       // Mutually exclusive groupings based on category
       const headwear = ['hat', 'crown'];
       const neckwear = ['bowtie', 'collar', 'scarf'];
-      const backwear = ['wings', 'backpack'];
 
       if (headwear.includes(acc)) {
         filtered = filtered.filter(a => !headwear.includes(a));
-      }
-      if (neckwear.includes(acc)) {
-        filtered = filtered.filter(a => !neckwear.includes(a));
-      }
-      if (backwear.includes(acc)) {
-        filtered = filtered.filter(a => !backwear.includes(a));
       }
       if (neckwear.includes(acc)) {
         filtered = filtered.filter(a => !neckwear.includes(a));
@@ -156,17 +149,7 @@ export default function Home() {
               >🕶 Lentes</button>
             </div>
 
-            <h3 className="text-sm font-bold text-center text-pink-500 mb-3 mt-4">🎒 Espalda</h3>
-            <div className="flex flex-wrap gap-2 justify-center max-w-xs mx-auto">
-              <button
-                onClick={() => toggleAccessory('wings', 'back')}
-                className={`px-3 py-1.5 rounded-full text-sm font-bold border-2 transition-transform active:scale-95 ${accessories.includes('wings') ? 'bg-slate-500 text-white border-slate-600 shadow-md' : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50'}`}
-              >👼 Alas</button>
-              <button
-                onClick={() => toggleAccessory('backpack', 'back')}
-                className={`px-3 py-1.5 rounded-full text-sm font-bold border-2 transition-transform active:scale-95 ${accessories.includes('backpack') ? 'bg-blue-500 text-white border-blue-600 shadow-md' : 'bg-white text-blue-500 border-blue-200 hover:bg-blue-50'}`}
-              >🎒 Mochila</button>
-            </div>
+
           </div>
         </div>
 
