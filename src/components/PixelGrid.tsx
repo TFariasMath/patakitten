@@ -2,122 +2,280 @@ import React from 'react';
 
 const COLOR_MAP: Record<string, string> = {
     ' ': 'transparent',
-    '1': '#111827', // Black fur
-    '2': '#FDE047', // Yellow eye
-    '0': '#000000', // Black pupil
-    '3': '#F472B6', // Pink nose
-    '4': '#6B21A8', // Purple hat
-    '5': '#FBBF24', // Gold hat band
-    '6': '#EF4444', // Red glasses
-    '7': '#3B82F6', // Blue bowtie
-    '8': '#F59E0B', // Gold crown
-    '9': '#10B981', // Emerald crown gem
-    'A': '#F87171', // Red bowtie center
-    'B': '#FFFFFF', // Glasses reflection
+    '0': '#000000', // Black outline & details
+    '1': '#111827', // Black fur base
+    '2': '#374151', // Dark grey fur shading
+    '3': '#9CA3AF', // Light grey fur highlights
+    '4': '#FFFFFF', // White fur & eye reflection
+    '5': '#FBCFE8', // Pink ears
+    '6': '#FDE047', // Yellow eyes (base)
+
+    // Headwear
+    'H': '#6B21A8', // Purple Hat base
+    'h': '#FBBF24', // Hat band
+    'C': '#F59E0B', // Crown gold
+    'c': '#10B981', // Crown gem emerald
+
+    // Eyewear
+    'G': '#EF4444', // Glasses red frame
+    'g': '#FFFFFF', // Glasses reflection
+
+    // Neckwear
+    'B': '#3B82F6', // Blue bowtie
+    'b': '#1E3A8A', // Bowtie center
+    'N': '#10B981', // Green collar
+    'n': '#F59E0B', // Collar bell gold
 };
 
-// 16x16 grid for Pixel Art
 export const PIXEL_LAYERS = {
-    baseCat: [
-        "                ",
-        "  11        11  ",
-        "  11        11  ",
-        " 1111      1111 ",
-        " 11111111111111 ",
-        "1111111111111111",
-        "1122211111122211",
-        "1120211111120211",
-        "1122211111122211",
-        "1111111331111111",
-        " 11111333311111 ",
-        "  111111111111  ",
-        "   1111111111   ",
-        "    11111111    ",
-        "                ",
-        "                ",
+    // 32x32 pixel art representation of the provided kitten design (adapted to black)
+    baseCatFrame1: [
+        "                        0000    ",
+        "                       055550   ",
+        "                      05555500  ",
+        "                     025550220  ",
+        "                    0225502220  ",
+        "                  00222202220   ",
+        "                 02222220220    ",
+        "                02222222220     ",
+        "               02200222220      ",
+        "              02204022220       ",
+        "             02220022220        ",
+        "  000       02222222200         ",
+        " 05550000000222222222200        ",
+        " 055555555222200444002220       ",
+        "  005555522220444444402220      ",
+        "    00552222044004004402220     ",
+        "      022220444040044440220     ",
+        "     0222220444400444440220     ",
+        "     0222204444444444440220     ",
+        "     022220444400000004020      ",
+        "    022220444440     0400       ",
+        "   022222044440      00         ",
+        "  0222220444440                 ",
+        "  02222044444440                ",
+        " 0222220444444440      00       ",
+        " 02222204404440440    0220      ",
+        "022222044044404444000022220     ",
+        "02222204044404444422222220      ",
+        " 022220404440444422222200       ",
+        " 0022040444044442220000         ",
+        "   0000000000000000             ",
+        "                                ",
+    ],
+    baseCatFrame2: [
+        "                        0000    ",
+        "                       055550   ",
+        "                      05555500  ",
+        "                     025550220  ",
+        "                    0225502220  ",
+        "                  00222202220   ",
+        "                 02222220220    ",
+        "                02222222220     ",
+        "               02200222220      ",
+        "              02204022220       ",
+        "             02220022220        ",
+        "  000       02222222200         ",
+        " 05550000000222222222200        ",
+        " 055555555222200004002220       ",
+        "  005555522220000000402220      ",
+        "    00552222004004004402220     ",
+        "      022220044400004440220     ",
+        "     0222220444400004440220     ",
+        "     0222204444444444440220     ",
+        "     022220444400000004020      ",
+        "    022220444440     0400       ",
+        "   022222044440      00         ",
+        "  0222220444440                 ",
+        "  02222044444440                ",
+        " 0222220444444440      00       ",
+        " 02222204404440440    0220      ",
+        "022222044044404444000022220     ",
+        "02222204044404444422222220      ",
+        " 022220404440444422222200       ",
+        " 0022040444044442220000         ",
+        "   0000000000000000             ",
+        "                                ",
     ],
     hat: [
-        "      4444      ",
-        "     444444     ",
-        "     444444     ",
-        "     555555     ",
-        "   4444444444   ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-    ],
-    glasses: [
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        " 66666    66666 ",
-        "6B00006666B00006",
-        " 66666    66666 ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-    ],
-    bowtie: [
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "    77    77    ",
-        "    777AA777    ",
-        "    77    77    ",
-        "                ",
+        "                   HHHH         ",
+        "                  HHHHHH        ",
+        "                 HHHHHHHH       ",
+        "                 HHHHHHHH       ",
+        "                 hhhhhhhh       ",
+        "               HHHHHHHHHHHH     ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
     ],
     crown: [
-        "      8  8      ",
-        "     888888     ",
-        "     898898     ",
-        "     888888     ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
+        "                 C  C  C        ",
+        "                CCCCCCCCC       ",
+        "                CCcCCcCCc       ",
+        "                CCCCCCCCC       ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+    ],
+    glasses: [
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                000   000       ",
+        "               0GGG000GGG0      ",
+        "              0Gg0000G000G0     ",
+        "               0GGG0 0GGG0      ",
+        "                000   000       ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+    ],
+    bowtie: [
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                    00000       ",
+        "                   0B0b0B0      ",
+        "                   0BBbBB0      ",
+        "                    00000       ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+    ],
+    collar: [
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                  0000000       ",
+        "                 0NNNNNNN0      ",
+        "                   0n0          ",
+        "                   000          ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
+        "                                ",
     ]
 };
 
-export default function PixelGrid({ activeAccessories }: { activeAccessories: string[] }) {
-    // Combine layers (Base Cat + Active Accessories) in order
-    const layersToRender = ['baseCat', ...activeAccessories.filter(a => Object.keys(PIXEL_LAYERS).includes(a))];
+export default function PixelGrid({ activeAccessories, isAnimating }: { activeAccessories: string[], isAnimating: boolean }) {
+    const catLayer = isAnimating ? 'baseCatFrame2' : 'baseCatFrame1';
+    const layersToRender = [catLayer, ...activeAccessories.filter(a => Object.keys(PIXEL_LAYERS).includes(a))];
 
-    const width = 16;
-    const height = 16;
+    const width = 32;
+    const height = 32;
 
-    // Create an empty composite 16x16 image
     const finalPixels = Array(height).fill(0).map(() => Array(width).fill(' '));
 
     layersToRender.forEach(layerName => {
@@ -126,7 +284,7 @@ export default function PixelGrid({ activeAccessories }: { activeAccessories: st
             for (let x = 0; x < width; x++) {
                 const char = layerData[y]?.[x] || ' ';
                 if (char !== ' ') {
-                    finalPixels[y][x] = char; // Overlay pixel
+                    finalPixels[y][x] = char;
                 }
             }
         }

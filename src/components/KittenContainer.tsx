@@ -35,8 +35,8 @@ export default function KittenContainer({ onPat, accessories }: { onPat: () => v
 
     return (
         <div className="relative cursor-pointer select-none flex flex-col items-center" onClick={handleTouchKitten}>
-            <div className={`transition-all duration-300 ${animating ? 'scale-95 translate-y-2' : 'scale-100 hover:scale-105'}`}>
-                <PixelGrid activeAccessories={accessories} />
+            <div className={`transition-transform duration-100 ${animating ? 'scale-95 translate-y-2' : 'scale-100 hover:scale-105'}`}>
+                <PixelGrid activeAccessories={accessories} isAnimating={animating} />
 
                 <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-white px-5 py-2 rounded-full shadow-lg border-2 border-pink-300 font-extrabold text-pink-600 animate-pulse text-sm whitespace-nowrap z-10 transition-transform">
                     ¡Acaríciame! 👋

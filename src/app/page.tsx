@@ -40,16 +40,24 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [modifiedLocally]);
 
-  const toggleAccessory = (acc: string) => {
+  const toggleAccessory = (acc: string, category: string) => {
     setModifiedLocally(true);
     setAccessories(prev => {
       let filtered = prev;
-      // Mutually exclusive headwear
-      if (acc === 'hat' && prev.includes('crown')) filtered = prev.filter(a => a !== 'crown');
-      if (acc === 'crown' && prev.includes('hat')) filtered = prev.filter(a => a !== 'hat');
 
-      if (filtered.includes(acc)) {
-        return filtered.filter(a => a !== acc);
+      // Mutually exclusive groupings based on category
+      const headwear = ['hat', 'crown'];
+      const neckwear = ['bowtie', 'collar'];
+
+      if (headwear.includes(acc)) {
+        filtered = filtered.filter(a => !headwear.includes(a));
+      }
+      if (neckwear.includes(acc)) {
+        filtered = filtered.filter(a => !neckwear.includes(a));
+      }
+
+      if (prev.includes(acc)) {
+        return prev.filter(a => a !== acc); // Just toggle off if it was already on
       } else {
         return [...filtered, acc];
       }
@@ -104,23 +112,38 @@ export default function Home() {
         <div className="flex flex-col items-center">
           <KittenContainer onPat={handleKittenClick} accessories={accessories} />
 
-          <div className="flex flex-wrap gap-2 mt-8 justify-center max-w-xs">
-            <button
-              onClick={() => toggleAccessory('hat')}
-              className={`px-3 py-1.5 rounded-full text-sm font-bold border-2 transition-transform active:scale-95 ${accessories.includes('hat') ? 'bg-purple-500 text-white border-purple-600 shadow-md' : 'bg-white text-purple-500 border-purple-200 hover:bg-purple-50'}`}
-            >🎩 Sombrero</button>
-            <button
-              onClick={() => toggleAccessory('crown')}
-              className={`px-3 py-1.5 rounded-full text-sm font-bold border-2 transition-transform active:scale-95 ${accessories.includes('crown') ? 'bg-yellow-500 text-white border-yellow-600 shadow-md' : 'bg-white text-yellow-600 border-yellow-200 hover:bg-yellow-50'}`}
-            >👑 Corona</button>
-            <button
-              onClick={() => toggleAccessory('glasses')}
-              className={`px-3 py-1.5 rounded-full text-sm font-bold border-2 transition-transform active:scale-95 ${accessories.includes('glasses') ? 'bg-red-500 text-white border-red-600 shadow-md' : 'bg-white text-red-500 border-red-200 hover:bg-red-50'}`}
-            >🕶 Lentes</button>
-            <button
-              onClick={() => toggleAccessory('bowtie')}
-              className={`px-3 py-1.5 rounded-full text-sm font-bold border-2 transition-transform active:scale-95 ${accessories.includes('bowtie') ? 'bg-blue-500 text-white border-blue-600 shadow-md' : 'bg-white text-blue-500 border-blue-200 hover:bg-blue-50'}`}
-            >🎀 Corbatín</button>
+          <div className="w-full mt-8 bg-white/60 p-4 rounded-3xl border border-pink-100 shadow-sm">
+            <h3 className="text-sm font-bold text-center text-pink-500 mb-3">🎩 Cabeza</h3>
+            <div className="flex flex-wrap gap-2 justify-center max-w-xs mb-4 mx-auto">
+              <button
+                onClick={() => toggleAccessory('hat', 'head')}
+                className={`px-3 py-1.5 rounded-full text-sm font-bold border-2 transition-transform active:scale-95 ${accessories.includes('hat') ? 'bg-purple-500 text-white border-purple-600 shadow-md' : 'bg-white text-purple-500 border-purple-200 hover:bg-purple-50'}`}
+              >🎩 Sombrero</button>
+              <button
+                onClick={() => toggleAccessory('crown', 'head')}
+                className={`px-3 py-1.5 rounded-full text-sm font-bold border-2 transition-transform active:scale-95 ${accessories.includes('crown') ? 'bg-yellow-500 text-white border-yellow-600 shadow-md' : 'bg-white text-yellow-600 border-yellow-200 hover:bg-yellow-50'}`}
+              >👑 Corona</button>
+            </div>
+
+            <h3 className="text-sm font-bold text-center text-pink-500 mb-3">🎀 Cuello</h3>
+            <div className="flex flex-wrap gap-2 justify-center max-w-xs mb-4 mx-auto">
+              <button
+                onClick={() => toggleAccessory('bowtie', 'neck')}
+                className={`px-3 py-1.5 rounded-full text-sm font-bold border-2 transition-transform active:scale-95 ${accessories.includes('bowtie') ? 'bg-blue-500 text-white border-blue-600 shadow-md' : 'bg-white text-blue-500 border-blue-200 hover:bg-blue-50'}`}
+              >🎀 Corbatín</button>
+              <button
+                onClick={() => toggleAccessory('collar', 'neck')}
+                className={`px-3 py-1.5 rounded-full text-sm font-bold border-2 transition-transform active:scale-95 ${accessories.includes('collar') ? 'bg-emerald-500 text-white border-emerald-600 shadow-md' : 'bg-white text-emerald-500 border-emerald-200 hover:bg-emerald-50'}`}
+              >🔔 Collar</button>
+            </div>
+
+            <h3 className="text-sm font-bold text-center text-pink-500 mb-3">🕶 Cara</h3>
+            <div className="flex flex-wrap gap-2 justify-center max-w-xs mx-auto">
+              <button
+                onClick={() => toggleAccessory('glasses', 'face')}
+                className={`px-3 py-1.5 rounded-full text-sm font-bold border-2 transition-transform active:scale-95 ${accessories.includes('glasses') ? 'bg-red-500 text-white border-red-600 shadow-md' : 'bg-white text-red-500 border-red-200 hover:bg-red-50'}`}
+              >🕶 Lentes</button>
+            </div>
           </div>
         </div>
 
