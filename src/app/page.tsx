@@ -47,7 +47,7 @@ export default function Home() {
 
       // Mutually exclusive groupings based on category
       const headwear = ['hat', 'crown'];
-      const neckwear = ['bowtie', 'collar'];
+      const neckwear = ['bowtie', 'collar', 'scarf'];
 
       if (headwear.includes(acc)) {
         filtered = filtered.filter(a => !headwear.includes(a));
@@ -135,6 +135,10 @@ export default function Home() {
                 onClick={() => toggleAccessory('collar', 'neck')}
                 className={`px-3 py-1.5 rounded-full text-sm font-bold border-2 transition-transform active:scale-95 ${accessories.includes('collar') ? 'bg-emerald-500 text-white border-emerald-600 shadow-md' : 'bg-white text-emerald-500 border-emerald-200 hover:bg-emerald-50'}`}
               >🔔 Collar</button>
+              <button
+                onClick={() => toggleAccessory('scarf', 'neck')}
+                className={`px-3 py-1.5 rounded-full text-sm font-bold border-2 transition-transform active:scale-95 ${accessories.includes('scarf') ? 'bg-red-500 text-white border-red-600 shadow-md' : 'bg-white text-red-500 border-red-200 hover:bg-red-50'}`}
+              >🧣 Bufanda</button>
             </div>
 
             <h3 className="text-sm font-bold text-center text-pink-500 mb-3">🕶 Cara</h3>
