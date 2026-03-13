@@ -18,17 +18,32 @@ const defaultData: KVStore = {
     cooldowns: {}
 };
 
+let dbCache: KVStore | null = null;
+
 async function getDB(): Promise<KVStore> {
+    if (dbCache) return dbCache;
     try {
         const data = await fs.readFile(DB_FILE, 'utf-8');
-        return JSON.parse(data);
+        dbCache = JSON.parse(data);
+        return dbCache!;
     } catch (e) {
-        return defaultData;
+        dbCache = JSON.parse(JSON.stringify(defaultData));
+        return dbCache!;
     }
 }
 
+let writeLock = false;
 async function saveDB(data: KVStore) {
-    await fs.writeFile(DB_FILE, JSON.stringify(data, null, 2), 'utf-8');
+    dbCache = data;
+    if (writeLock) return;
+    writeLock = true;
+    try {
+        await fs.writeFile(DB_FILE, JSON.stringify(data, null, 2), 'utf-8');
+    } catch (e) {
+        // Ignore concurrency bugs on Windows
+    } finally {
+        writeLock = false;
+    }
 }
 
 export const kv = {
